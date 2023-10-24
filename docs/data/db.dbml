@@ -1,0 +1,79 @@
+// Use DBML to define your database structure
+// Docs: https://dbml.dbdiagram.io/docs
+
+Table AspNetUsers {
+  Id uuid [pk]
+  FullName varchar(80)
+  DisplayName varchar(15)
+  Gender varchar(1)
+  CreatedAt timestamp
+  UpdatedAt timestamp
+  LanguageId text
+  CountryId text
+  CreatedById uuid
+  UpdatedById uuid
+  UserName varchar(256)
+  NormalizedUserName varchar(256)
+  Email varchar(256)
+  NormalizedEmail varchar(256)
+  EmailConfirmed boolean
+  PasswordHash text
+  SecurityStamp text
+  ConcurrencyStamp text
+  PhoneNumber text
+  PhoneNumberConfirmed boolean
+  TwoFactorEnabled boolean
+  LockoutEnd timestamp
+  LockoutEnabled boolean
+  AccessFailedCount integer
+}
+
+Table AspNetRoles {
+  Id uuid [pk]
+  Name varchar(256)
+  NormalizedName varchar(256)
+  ConcurrencyStamp text
+}
+
+Table AspNetRoleClaims {
+  Id integer [pk, increment]
+  RoleId uuid [ref: > AspNetRoles.Id]
+  ClaimType text
+  ClaimValue text
+}
+
+Table AspNetUserClaims {
+  Id integer [pk, increment]
+  UserId uuid [ref: > AspNetUsers.Id]
+  ClaimType text
+  ClaimValue text
+}
+
+Table AspNetUserLogins {
+  LoginProvider text [pk]
+  ProviderKey text [pk]
+  UserId uuid [ref: > AspNetUsers.Id]
+  ProviderDisplayName text
+}
+
+Table AspNetUserRoles {
+  UserId uuid [pk, ref: > AspNetUsers.Id]
+  RoleId uuid [pk, ref: > AspNetRoles.Id]
+}
+
+Table AspNetUserTokens {
+  UserId uuid [pk, ref: > AspNetUsers.Id]
+  LoginProvider text [pk]
+  Name text [pk]
+  Value text
+}
+
+Table Countries {
+  Id varchar(3) [pk]
+  Name varchar(50)
+}
+
+Table Languages {
+  Id varchar(3) [pk]
+  Name varchar(50)
+}

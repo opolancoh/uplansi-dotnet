@@ -2,21 +2,18 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using Uplansi.Data.EntityFramework;
 
 #nullable disable
 
-namespace Uplansi.Data.EntityFramework.Migrations.AccountDbContextMigrations
+namespace Uplansi.Data.EntityFramework.Migrations.AccountDb
 {
     [DbContext(typeof(AccountDbContext))]
-    [Migration("20231023062940_InitialMigration")]
-    partial class InitialMigration
+    partial class AccountDbContextModelSnapshot : ModelSnapshot
     {
-        /// <inheritdoc />
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -102,11 +99,19 @@ namespace Uplansi.Data.EntityFramework.Migrations.AccountDbContextMigrations
                     b.Property<Guid>("RoleId")
                         .HasColumnType("uuid");
 
+                    b.Property<string>("Discriminator")
+                        .IsRequired()
+                        .HasColumnType("text");
+
                     b.HasKey("UserId", "RoleId");
 
                     b.HasIndex("RoleId");
 
                     b.ToTable("AspNetUserRoles", (string)null);
+
+                    b.HasDiscriminator<string>("Discriminator").HasValue("IdentityUserRole<Guid>");
+
+                    b.UseTphMappingStrategy();
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<System.Guid>", b =>
@@ -184,10 +189,13 @@ namespace Uplansi.Data.EntityFramework.Migrations.AccountDbContextMigrations
 
                     b.Property<string>("CountryId")
                         .IsRequired()
-                        .HasColumnType("character varying(3)");
+                        .HasColumnType("text");
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("timestamp with time zone");
+
+                    b.Property<Guid>("CreatedById")
+                        .HasColumnType("uuid");
 
                     b.Property<string>("DisplayName")
                         .IsRequired()
@@ -212,7 +220,7 @@ namespace Uplansi.Data.EntityFramework.Migrations.AccountDbContextMigrations
 
                     b.Property<string>("LanguageId")
                         .IsRequired()
-                        .HasColumnType("character varying(3)");
+                        .HasColumnType("text");
 
                     b.Property<bool>("LockoutEnabled")
                         .HasColumnType("boolean");
@@ -246,15 +254,16 @@ namespace Uplansi.Data.EntityFramework.Migrations.AccountDbContextMigrations
                     b.Property<DateTime>("UpdatedAt")
                         .HasColumnType("timestamp with time zone");
 
+                    b.Property<Guid>("UpdatedById")
+                        .HasColumnType("uuid");
+
                     b.Property<string>("UserName")
                         .HasMaxLength(256)
                         .HasColumnType("character varying(256)");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CountryId");
-
-                    b.HasIndex("LanguageId");
+                    b.HasIndex("CreatedById");
 
                     b.HasIndex("NormalizedEmail")
                         .HasDatabaseName("EmailIndex");
@@ -263,7 +272,57 @@ namespace Uplansi.Data.EntityFramework.Migrations.AccountDbContextMigrations
                         .IsUnique()
                         .HasDatabaseName("UserNameIndex");
 
+                    b.HasIndex("UpdatedById");
+
                     b.ToTable("AspNetUsers", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("42b42706-61fd-4e60-8129-d1570382a9bd"),
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "26d907d1-384a-4a12-935e-9f33e8e29e14",
+                            CountryId = "us",
+                            CreatedAt = new DateTime(2023, 10, 24, 2, 28, 59, 822, DateTimeKind.Utc).AddTicks(6370),
+                            CreatedById = new Guid("42b42706-61fd-4e60-8129-d1570382a9bd"),
+                            DisplayName = "system",
+                            Email = "system@ikobit.com",
+                            EmailConfirmed = false,
+                            FullName = "System",
+                            LanguageId = "en",
+                            LockoutEnabled = false,
+                            NormalizedEmail = "SYSTEM@IKOBIT.COM",
+                            NormalizedUserName = "SYSTEM",
+                            PasswordHash = "AQAAAAIAAYagAAAAELQ5Tm6sCggvHeFn/RBcJKGOVuVb2LHf2VUHHAfCbxPnIX+CTCN++vae0dsgg77v3Q==",
+                            PhoneNumberConfirmed = false,
+                            TwoFactorEnabled = false,
+                            UpdatedAt = new DateTime(2023, 10, 24, 2, 28, 59, 822, DateTimeKind.Utc).AddTicks(6370),
+                            UpdatedById = new Guid("42b42706-61fd-4e60-8129-d1570382a9bd"),
+                            UserName = "system"
+                        },
+                        new
+                        {
+                            Id = new Guid("8dfff7f0-1bf5-4dd1-b217-cb7694ed789f"),
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "02e4fa5b-cbb0-4731-b114-919cfdc2074d",
+                            CountryId = "us",
+                            CreatedAt = new DateTime(2023, 10, 24, 2, 28, 59, 822, DateTimeKind.Utc).AddTicks(6380),
+                            CreatedById = new Guid("42b42706-61fd-4e60-8129-d1570382a9bd"),
+                            DisplayName = "admin",
+                            Email = "admin@ikobit.com",
+                            EmailConfirmed = false,
+                            FullName = "Admin",
+                            LanguageId = "en",
+                            LockoutEnabled = false,
+                            NormalizedEmail = "ADMIN@IKOBIT.COM",
+                            NormalizedUserName = "ADMIN",
+                            PasswordHash = "AQAAAAIAAYagAAAAEGGG3hiE0+9XBH2FHgd0RA2vfLqyy5xKnozsdY7Nvji2BvITXFt/WShM4uVmPleiRg==",
+                            PhoneNumberConfirmed = false,
+                            TwoFactorEnabled = false,
+                            UpdatedAt = new DateTime(2023, 10, 24, 2, 28, 59, 822, DateTimeKind.Utc).AddTicks(6380),
+                            UpdatedById = new Guid("42b42706-61fd-4e60-8129-d1570382a9bd"),
+                            UserName = "admin"
+                        });
                 });
 
             modelBuilder.Entity("Uplansi.Core.Entities.Account.RefreshToken", b =>
@@ -282,59 +341,22 @@ namespace Uplansi.Data.EntityFramework.Migrations.AccountDbContextMigrations
                     b.ToTable("RefreshTokens");
                 });
 
-            modelBuilder.Entity("Uplansi.Core.Entities.Common.Country", b =>
+            modelBuilder.Entity("Uplansi.Core.Entities.Account.ApplicationUserRole", b =>
                 {
-                    b.Property<string>("Id")
-                        .HasMaxLength(3)
-                        .HasColumnType("character varying(3)");
+                    b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityUserRole<System.Guid>");
 
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("character varying(50)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Countries", (string)null);
+                    b.HasDiscriminator().HasValue("ApplicationUserRole");
 
                     b.HasData(
                         new
                         {
-                            Id = "us",
-                            Name = "United States"
+                            UserId = new Guid("42b42706-61fd-4e60-8129-d1570382a9bd"),
+                            RoleId = new Guid("42b42706-61fd-4e60-8129-d1570382a9bd")
                         },
                         new
                         {
-                            Id = "co",
-                            Name = "Colombia"
-                        });
-                });
-
-            modelBuilder.Entity("Uplansi.Core.Entities.Common.Language", b =>
-                {
-                    b.Property<string>("Id")
-                        .HasMaxLength(3)
-                        .HasColumnType("character varying(3)");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("character varying(50)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Languages", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            Id = "en",
-                            Name = "English"
-                        },
-                        new
-                        {
-                            Id = "es",
-                            Name = "Spanish"
+                            UserId = new Guid("8dfff7f0-1bf5-4dd1-b217-cb7694ed789f"),
+                            RoleId = new Guid("42b42706-61fd-4e60-8129-d1570382a9bd")
                         });
                 });
 
@@ -391,31 +413,21 @@ namespace Uplansi.Data.EntityFramework.Migrations.AccountDbContextMigrations
 
             modelBuilder.Entity("Uplansi.Core.Entities.Account.ApplicationUser", b =>
                 {
-                    b.HasOne("Uplansi.Core.Entities.Common.Country", "Country")
-                        .WithMany("ApplicationUsers")
-                        .HasForeignKey("CountryId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                    b.HasOne("Uplansi.Core.Entities.Account.ApplicationUser", "CreatedBy")
+                        .WithMany()
+                        .HasForeignKey("CreatedById")
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("Uplansi.Core.Entities.Common.Language", "Language")
-                        .WithMany("ApplicationUsers")
-                        .HasForeignKey("LanguageId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                    b.HasOne("Uplansi.Core.Entities.Account.ApplicationUser", "UpdatedBy")
+                        .WithMany()
+                        .HasForeignKey("UpdatedById")
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.Navigation("Country");
+                    b.Navigation("CreatedBy");
 
-                    b.Navigation("Language");
-                });
-
-            modelBuilder.Entity("Uplansi.Core.Entities.Common.Country", b =>
-                {
-                    b.Navigation("ApplicationUsers");
-                });
-
-            modelBuilder.Entity("Uplansi.Core.Entities.Common.Language", b =>
-                {
-                    b.Navigation("ApplicationUsers");
+                    b.Navigation("UpdatedBy");
                 });
 #pragma warning restore 612, 618
         }

@@ -20,12 +20,12 @@ public class ApplicationUser : IdentityUser<Guid>
     public required string CountryId { get; set; }
     public Country? Country { get; set; }
     
-    /* [ForeignKey("CreatedBy")]
+    // Self-referencing relationship for CreatedBy
     public required Guid CreatedById { get; set; }
     public ApplicationUser? CreatedBy { get; set; }
     
-    [ForeignKey("UpdatedBy")]
+    // Self-referencing relationship for UpdatedBy
     public required Guid UpdatedById { get; set; }
-    public ApplicationUser? UpdatedBy { get; set; } */
+    public ApplicationUser? UpdatedBy { get; set; }
     
 }

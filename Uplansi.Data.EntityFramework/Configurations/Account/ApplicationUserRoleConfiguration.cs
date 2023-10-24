@@ -4,13 +4,13 @@ using Uplansi.Core.Entities.Account;
 
 namespace Uplansi.Data.EntityFramework.Configurations.Account;
 
-/* public class ApplicationUserRoleConfiguration : IEntityTypeConfiguration<ApplicationUserRole>
+public class ApplicationUserRoleConfiguration : IEntityTypeConfiguration<ApplicationUserRole>
 {
     private const string SystemUserId = ApplicationUserConfiguration.SystemUserId;
     private const string SystemRoleId = ApplicationRoleConfiguration.SystemRoleId;
     
     private const string AdminUserId = ApplicationUserConfiguration.AdminUserId;
-    private const string AdminRoleId = ApplicationRoleConfiguration.SystemRoleId;
+    private const string AdminRoleId = ApplicationRoleConfiguration.AdminRoleId;
 
     public void Configure(EntityTypeBuilder<ApplicationUserRole> builder)
     {
@@ -20,6 +20,6 @@ namespace Uplansi.Data.EntityFramework.Configurations.Account;
             new() { UserId = Guid.Parse(AdminUserId), RoleId =  Guid.Parse(AdminRoleId)},
         };
         
-        // builder.HasData(roles);
+        builder.HasData(roles);
     }
-} */
+} 

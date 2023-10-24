@@ -12,18 +12,6 @@ public class ApplicationUserConfiguration : IEntityTypeConfiguration<Application
 
     public void Configure(EntityTypeBuilder<ApplicationUser> builder)
     {
-        // Many-to-One
-        builder
-            .HasOne(x => x.Language)
-            .WithMany(x=>x.ApplicationUsers)
-            .HasForeignKey(x => x.LanguageId);
-        
-        // Many-to-One
-        builder
-            .HasOne(x => x.Country)
-            .WithMany(x=>x.ApplicationUsers)
-            .HasForeignKey(x => x.CountryId);
-        
         builder
             .Property(e => e.FullName)
             .IsRequired()
@@ -37,8 +25,34 @@ public class ApplicationUserConfiguration : IEntityTypeConfiguration<Application
         builder
             .Property(e => e.Gender)
             .HasMaxLength(1);
+        
+        // Configure Many-to-One
+        builder
+            .HasOne(x => x.Language)
+            .WithMany(x=>x.ApplicationUsers)
+            .HasForeignKey(x => x.LanguageId);
+        
+        // Configure Many-to-One
+        builder
+            .HasOne(x => x.Country)
+            .WithMany(x=>x.ApplicationUsers)
+            .HasForeignKey(x => x.CountryId);
+        
+        // Configure the self-referencing relationship for CreatedBy
+        builder
+            .HasOne(u => u.CreatedBy)
+            .WithMany()
+            .HasForeignKey(u => u.CreatedById)
+            .OnDelete(DeleteBehavior.Restrict);
+        
+        // Configure the self-referencing relationship for UpdatedBy
+        builder
+            .HasOne(u => u.UpdatedBy)
+            .WithMany()
+            .HasForeignKey(u => u.UpdatedById)
+            .OnDelete(DeleteBehavior.Restrict);
 
-        /* var users = new List<ApplicationUser>()
+        var users = new List<ApplicationUser>()
         {
             new()
             {
@@ -82,8 +96,8 @@ public class ApplicationUserConfiguration : IEntityTypeConfiguration<Application
 
         var adminUser = users.Single(x => x.UserName == "admin");
         adminUser.PasswordHash = passwordHasher.HashPassword(adminUser,
-            Environment.GetEnvironmentVariable($"UPLANSI_API_USER_ADMIN_PASSWORD")!); */
+            Environment.GetEnvironmentVariable($"UPLANSI_API_USER_ADMIN_PASSWORD")!);
 
-        // builder.HasData(users);
+        builder.HasData(users);
     }
 } 

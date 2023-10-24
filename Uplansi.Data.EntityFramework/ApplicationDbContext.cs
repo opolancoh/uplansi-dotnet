@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using Uplansi.Core.Entities.Account;
 using Uplansi.Core.Entities.Common;
 using Uplansi.Data.EntityFramework.Configurations;
 
@@ -6,8 +7,8 @@ namespace Uplansi.Data.EntityFramework;
 
 public class ApplicationDbContext : DbContext
 {
-    private readonly string _connectionString;
-    
+    // private readonly string _connectionString;
+
     public DbSet<Language> Languages { get; set; }
     public DbSet<Country> Countries { get; set; }
 
@@ -15,7 +16,7 @@ public class ApplicationDbContext : DbContext
         : base(options)
     {
     }
-    
+
     /* protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
         optionsBuilder.UseNpgsql(_connectionString);
@@ -28,5 +29,8 @@ public class ApplicationDbContext : DbContext
 
         modelBuilder.ApplyConfiguration(new LanguageConfiguration());
         modelBuilder.ApplyConfiguration(new CountryConfiguration());
+
+        // Ignore the entities that are created on ApplicationDbContext
+        modelBuilder.Ignore<ApplicationUser>();
     }
 }
