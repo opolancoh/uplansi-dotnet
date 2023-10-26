@@ -33,10 +33,7 @@ public class AccountDbContext : IdentityDbContext<ApplicationUser, ApplicationRo
         modelBuilder.ApplyConfiguration(new ApplicationRoleConfiguration());
         modelBuilder.ApplyConfiguration(new ApplicationUserConfiguration());
         modelBuilder.ApplyConfiguration(new ApplicationUserRoleConfiguration());
-        modelBuilder.ApplyConfiguration(new RefreshTokenConfiguration());
-        
-        modelBuilder.ApplyConfiguration(new LanguageConfiguration());
-        modelBuilder.ApplyConfiguration(new CountryConfiguration());
+        modelBuilder.ApplyConfiguration(new RefreshTokenConfiguration()); 
         
         // Ignore the entities that are created on ApplicationDbContext
         modelBuilder.Ignore<Language>();

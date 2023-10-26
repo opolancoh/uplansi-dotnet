@@ -1,16 +1,15 @@
-using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.AspNetCore.Identity;
 using Uplansi.Core.Entities.Common;
 
 namespace Uplansi.Core.Entities.Account;
 
-public class ApplicationUser : IdentityUser<Guid>
+public class ApplicationUser : IdentityUser<Guid>, IAuditableEntity
 {
     public string? FullName { get; set; }
     public required string DisplayName { get; set; }
     public string? Gender { get; set; }
-    public DateTime CreatedAt { get; set; }
-    public DateTime UpdatedAt { get; set; }
+    // public DateTime CreatedAt { get; set; }
+    // public DateTime UpdatedAt { get; set; }
 
     // Many-to-One relationship with Language
     public required string LanguageId { get; set; }
@@ -21,11 +20,18 @@ public class ApplicationUser : IdentityUser<Guid>
     public Country? Country { get; set; }
     
     // Self-referencing relationship for CreatedBy
-    public required Guid CreatedById { get; set; }
-    public ApplicationUser? CreatedBy { get; set; }
+    // public required Guid CreatedById { get; set; }
+    // public ApplicationUser? CreatedBy { get; set; }
     
     // Self-referencing relationship for UpdatedBy
-    public required Guid UpdatedById { get; set; }
-    public ApplicationUser? UpdatedBy { get; set; }
+    // public required Guid UpdatedById { get; set; }
+    // public ApplicationUser? UpdatedBy { get; set; }
     
+    // IAuditableEntity implementation
+    public DateTime CreatedAt { get; set; }
+    public DateTime UpdatedAt { get; set; }
+    public Guid CreatedById { get; set; }
+    public ApplicationUser? CreatedBy { get; set; }
+    public Guid UpdatedById { get; set; }
+    public ApplicationUser? UpdatedBy { get; set; }
 }

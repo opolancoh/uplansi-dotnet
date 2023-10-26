@@ -14,7 +14,6 @@ public class ApplicationUserConfiguration : IEntityTypeConfiguration<Application
     {
         builder
             .Property(e => e.FullName)
-            .IsRequired()
             .HasMaxLength(80);
 
         builder
@@ -40,16 +39,16 @@ public class ApplicationUserConfiguration : IEntityTypeConfiguration<Application
         
         // Configure the self-referencing relationship for CreatedBy
         builder
-            .HasOne(u => u.CreatedBy)
+            .HasOne(x => x.CreatedBy)
             .WithMany()
-            .HasForeignKey(u => u.CreatedById)
+            .HasForeignKey(x => x.CreatedById)
             .OnDelete(DeleteBehavior.Restrict);
         
         // Configure the self-referencing relationship for UpdatedBy
         builder
-            .HasOne(u => u.UpdatedBy)
+            .HasOne(x => x.UpdatedBy)
             .WithMany()
-            .HasForeignKey(u => u.UpdatedById)
+            .HasForeignKey(x => x.UpdatedById)
             .OnDelete(DeleteBehavior.Restrict);
 
         var users = new List<ApplicationUser>()

@@ -1,6 +1,6 @@
 namespace Uplansi.Core.Entities.Common;
 
-public class LanguageTranslations
+public class LanguageTranslation
 {
     // Composite Key parts
     public required string LanguageId { get; init; }

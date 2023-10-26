@@ -1,7 +1,9 @@
 using Microsoft.EntityFrameworkCore;
+using Uplansi.Core.Entities;
 using Uplansi.Core.Entities.Account;
 using Uplansi.Core.Entities.Common;
 using Uplansi.Data.EntityFramework.Configurations;
+using Uplansi.Data.EntityFramework.Configurations.Account;
 
 namespace Uplansi.Data.EntityFramework;
 
@@ -11,6 +13,7 @@ public class ApplicationDbContext : DbContext
 
     public DbSet<Language> Languages { get; set; }
     public DbSet<Country> Countries { get; set; }
+    public DbSet<ApplicationTask> ApplicationTasks { get; set; }
 
     public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
         : base(options)

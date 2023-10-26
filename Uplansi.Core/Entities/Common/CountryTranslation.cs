@@ -1,6 +1,6 @@
 namespace Uplansi.Core.Entities.Common;
 
-public class CountryTranslations
+public class CountryTranslation
 {
     // Composite Key parts
     public required string CountryId { get; init; }

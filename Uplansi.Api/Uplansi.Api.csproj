@@ -8,6 +8,7 @@
     </PropertyGroup>
 
     <ItemGroup>
+        <PackageReference Include="Asp.Versioning.Mvc" Version="7.1.0" />
         <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="7.0.5"/>
         <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="7.0.12">
           <PrivateAssets>all</PrivateAssets>
@@ -25,6 +26,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\Uplansi.Data.EntityFramework\Uplansi.Data.EntityFramework.csproj" />
+      <ProjectReference Include="..\Uplansi.Services.Data\Uplansi.Services.Data.csproj" />
     </ItemGroup>
 
 </Project>

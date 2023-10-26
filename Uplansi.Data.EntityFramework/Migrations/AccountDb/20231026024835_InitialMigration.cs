@@ -33,13 +33,13 @@ namespace Uplansi.Data.EntityFramework.Migrations.AccountDb
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
-                    FullName = table.Column<string>(type: "character varying(80)", maxLength: 80, nullable: false),
+                    FullName = table.Column<string>(type: "character varying(80)", maxLength: 80, nullable: true),
                     DisplayName = table.Column<string>(type: "character varying(15)", maxLength: 15, nullable: false),
                     Gender = table.Column<string>(type: "character varying(1)", maxLength: 1, nullable: true),
-                    CreatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    UpdatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     LanguageId = table.Column<string>(type: "text", nullable: false),
                     CountryId = table.Column<string>(type: "text", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    UpdatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     CreatedById = table.Column<Guid>(type: "uuid", nullable: false),
                     UpdatedById = table.Column<Guid>(type: "uuid", nullable: false),
                     UserName = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: true),
@@ -206,7 +206,7 @@ namespace Uplansi.Data.EntityFramework.Migrations.AccountDb
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "CountryId", "CreatedAt", "CreatedById", "DisplayName", "Email", "EmailConfirmed", "FullName", "Gender", "LanguageId", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UpdatedAt", "UpdatedById", "UserName" },
-                values: new object[] { new Guid("42b42706-61fd-4e60-8129-d1570382a9bd"), 0, "26d907d1-384a-4a12-935e-9f33e8e29e14", "us", new DateTime(2023, 10, 24, 2, 28, 59, 822, DateTimeKind.Utc).AddTicks(6370), new Guid("42b42706-61fd-4e60-8129-d1570382a9bd"), "system", "system@ikobit.com", false, "System", null, "en", false, null, "SYSTEM@IKOBIT.COM", "SYSTEM", "AQAAAAIAAYagAAAAELQ5Tm6sCggvHeFn/RBcJKGOVuVb2LHf2VUHHAfCbxPnIX+CTCN++vae0dsgg77v3Q==", null, false, null, false, new DateTime(2023, 10, 24, 2, 28, 59, 822, DateTimeKind.Utc).AddTicks(6370), new Guid("42b42706-61fd-4e60-8129-d1570382a9bd"), "system" });
+                values: new object[] { new Guid("42b42706-61fd-4e60-8129-d1570382a9bd"), 0, "e604e349-0ccd-49fa-8f3b-4601363816a1", "us", new DateTime(2023, 10, 26, 2, 48, 35, 497, DateTimeKind.Utc).AddTicks(8740), new Guid("42b42706-61fd-4e60-8129-d1570382a9bd"), "system", "system@ikobit.com", false, "System", null, "en", false, null, "SYSTEM@IKOBIT.COM", "SYSTEM", "AQAAAAIAAYagAAAAECBGYKpAnbmwI0Hn+63keJuC9r3dVBhMrPH8XuJDL/GEJFMMpVGYozy8Bl2Obt4QHw==", null, false, null, false, new DateTime(2023, 10, 26, 2, 48, 35, 497, DateTimeKind.Utc).AddTicks(8740), new Guid("42b42706-61fd-4e60-8129-d1570382a9bd"), "system" });
 
             migrationBuilder.InsertData(
                 table: "AspNetUserRoles",
@@ -216,12 +216,12 @@ namespace Uplansi.Data.EntityFramework.Migrations.AccountDb
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "CountryId", "CreatedAt", "CreatedById", "DisplayName", "Email", "EmailConfirmed", "FullName", "Gender", "LanguageId", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UpdatedAt", "UpdatedById", "UserName" },
-                values: new object[] { new Guid("8dfff7f0-1bf5-4dd1-b217-cb7694ed789f"), 0, "02e4fa5b-cbb0-4731-b114-919cfdc2074d", "us", new DateTime(2023, 10, 24, 2, 28, 59, 822, DateTimeKind.Utc).AddTicks(6380), new Guid("42b42706-61fd-4e60-8129-d1570382a9bd"), "admin", "admin@ikobit.com", false, "Admin", null, "en", false, null, "ADMIN@IKOBIT.COM", "ADMIN", "AQAAAAIAAYagAAAAEGGG3hiE0+9XBH2FHgd0RA2vfLqyy5xKnozsdY7Nvji2BvITXFt/WShM4uVmPleiRg==", null, false, null, false, new DateTime(2023, 10, 24, 2, 28, 59, 822, DateTimeKind.Utc).AddTicks(6380), new Guid("42b42706-61fd-4e60-8129-d1570382a9bd"), "admin" });
+                values: new object[] { new Guid("8dfff7f0-1bf5-4dd1-b217-cb7694ed789f"), 0, "497ec4e2-3b56-4ef5-b140-ddbeec4850c3", "us", new DateTime(2023, 10, 26, 2, 48, 35, 497, DateTimeKind.Utc).AddTicks(8750), new Guid("42b42706-61fd-4e60-8129-d1570382a9bd"), "admin", "admin@ikobit.com", false, "Admin", null, "en", false, null, "ADMIN@IKOBIT.COM", "ADMIN", "AQAAAAIAAYagAAAAEEApzumAt1MWSW2cpOB6+SjBiwwBXiM1l2cjvLYY6hQ3dh1SSXrjYGNsm2vEcWWOdg==", null, false, null, false, new DateTime(2023, 10, 26, 2, 48, 35, 497, DateTimeKind.Utc).AddTicks(8750), new Guid("42b42706-61fd-4e60-8129-d1570382a9bd"), "admin" });
 
             migrationBuilder.InsertData(
                 table: "AspNetUserRoles",
                 columns: new[] { "RoleId", "UserId", "Discriminator" },
-                values: new object[] { new Guid("42b42706-61fd-4e60-8129-d1570382a9bd"), new Guid("8dfff7f0-1bf5-4dd1-b217-cb7694ed789f"), "ApplicationUserRole" });
+                values: new object[] { new Guid("8dfff7f0-1bf5-4dd1-b217-cb7694ed789f"), new Guid("8dfff7f0-1bf5-4dd1-b217-cb7694ed789f"), "ApplicationUserRole" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",

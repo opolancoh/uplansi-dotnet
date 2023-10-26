@@ -1,8 +1,12 @@
 using System.Text.Json;
+using Asp.Versioning;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Uplansi.Core.Contracts.Repositories;
+using Uplansi.Core.Contracts.Services;
 using Uplansi.Core.Entities.Account;
 using Uplansi.Data.EntityFramework;
+using Uplansi.Services.Data.v1;
 
 namespace Uplansi.Api.Extensions;
 
@@ -14,17 +18,18 @@ public static class ServiceExtensions
         
         services.AddDbContext<ApplicationDbContext>(options =>
         {
-            options.UseNpgsql(appDbConnection);
+            options.UseNpgsql(appDbConnection).LogTo(Console.WriteLine, LogLevel.Information);
             options.EnableSensitiveDataLogging();
         });
         services.AddDbContext<AccountDbContext>(options =>
         {
-            options.UseNpgsql(appDbConnection);
+            options.UseNpgsql(appDbConnection).LogTo(Console.WriteLine, LogLevel.Information);
             options.EnableSensitiveDataLogging();
         });
-        // services.AddScoped<IEmployeeEntityFrameworkRepository, EmployeeEntityFrameworkRepository>();
-        // services.AddScoped<IEmployeeEntityFrameworkService, EmployeeEntityFrameworkService>();
-
+        
+        services.AddScoped<IUserRepository, UserRepository>();
+        services.AddScoped<IUserService, UserService>();
+        services.AddScoped<IAccountService, AccountService>();
     }
     
     public static void ConfigureIdentity(this IServiceCollection services)
@@ -49,5 +54,32 @@ public static class ServiceExtensions
             options.JsonSerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
             options.JsonSerializerOptions.DictionaryKeyPolicy = JsonNamingPolicy.CamelCase;
         });
+    }
+    
+    public static void ConfigureApiVersioning(this IServiceCollection services)
+    {
+        services.AddApiVersioning(options =>
+        {
+            options.DefaultApiVersion = new ApiVersion(1, 0);
+            options.AssumeDefaultVersionWhenUnspecified = true;
+            options.ReportApiVersions = true;
+            options.ApiVersionReader = new UrlSegmentApiVersionReader();
+        });
+    }
+    
+    public static void ConfigureCors(this IServiceCollection services)
+    {
+        services.AddCors(options =>
+            {
+                options.AddDefaultPolicy(policy =>
+                    {
+                        policy
+                            .AllowAnyOrigin()
+                            .AllowAnyHeader()
+                            .AllowAnyMethod();
+                    }
+                );
+            }
+        );
     }
 }
