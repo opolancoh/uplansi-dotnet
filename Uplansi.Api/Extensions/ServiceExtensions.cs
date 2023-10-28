@@ -1,10 +1,14 @@
+using System.Text;
 using System.Text.Json;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Asp.Versioning;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using Uplansi.Core.Contracts.Repositories;
 using Uplansi.Core.Contracts.Services;
 using Uplansi.Core.Entities.Account;
+using Uplansi.Core.Utils;
 using Uplansi.Data.EntityFramework;
 using Uplansi.Services.Data.v1;
 
@@ -15,23 +19,24 @@ public static class ServiceExtensions
     public static void ConfigurePersistence(this IServiceCollection services)
     {
         var appDbConnection = Environment.GetEnvironmentVariable("UPLANSI_DB_CONNECTION");
-        
+
         services.AddDbContext<ApplicationDbContext>(options =>
         {
-            options.UseNpgsql(appDbConnection).LogTo(Console.WriteLine, LogLevel.Information);
+            options.UseNpgsql(appDbConnection);// .LogTo(Console.WriteLine, LogLevel.Information);
             options.EnableSensitiveDataLogging();
         });
         services.AddDbContext<AccountDbContext>(options =>
         {
-            options.UseNpgsql(appDbConnection).LogTo(Console.WriteLine, LogLevel.Information);
+            options.UseNpgsql(appDbConnection); // .LogTo(Console.WriteLine, LogLevel.Information);
             options.EnableSensitiveDataLogging();
         });
-        
+
         services.AddScoped<IUserRepository, UserRepository>();
         services.AddScoped<IUserService, UserService>();
+        services.AddScoped<IAccountRepository, AccountRepository>();
         services.AddScoped<IAccountService, AccountService>();
     }
-    
+
     public static void ConfigureIdentity(this IServiceCollection services)
     {
         services.AddIdentity<ApplicationUser, ApplicationRole>(o =>
@@ -47,6 +52,34 @@ public static class ServiceExtensions
             .AddDefaultTokenProviders();
     }
 
+    public static void ConfigureJwt(this IServiceCollection services, IConfiguration configuration)
+    {
+        var jwtSettings = configuration.GetSection("JwtConfig");
+        var issuer = jwtSettings["Issuer"];
+        var audience = jwtSettings["Audience"];
+        var secret = jwtSettings["Secret"];
+
+        services
+            .AddAuthentication(x =>
+            {
+                x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
+            .AddJwtBearer(x =>
+            {
+                x.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuer = true,
+                    ValidateAudience = true,
+                    ValidateLifetime = true,
+                    ValidateIssuerSigningKey = true,
+                    ValidIssuer = issuer,
+                    ValidAudience = audience,
+                    IssuerSigningKey = AuthenticationHelper.GetSymmetricSecurityKey(secret!)
+                };
+            });
+    }
+
     public static void ConfigureControllers(this IServiceCollection services)
     {
         services.AddControllers().AddJsonOptions(options =>
@@ -55,7 +88,7 @@ public static class ServiceExtensions
             options.JsonSerializerOptions.DictionaryKeyPolicy = JsonNamingPolicy.CamelCase;
         });
     }
-    
+
     public static void ConfigureApiVersioning(this IServiceCollection services)
     {
         services.AddApiVersioning(options =>
@@ -66,7 +99,7 @@ public static class ServiceExtensions
             options.ApiVersionReader = new UrlSegmentApiVersionReader();
         });
     }
-    
+
     public static void ConfigureCors(this IServiceCollection services)
     {
         services.AddCors(options =>

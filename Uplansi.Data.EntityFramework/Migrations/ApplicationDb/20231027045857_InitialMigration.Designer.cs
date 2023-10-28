@@ -12,7 +12,7 @@ using Uplansi.Data.EntityFramework;
 namespace Uplansi.Data.EntityFramework.Migrations.ApplicationDb
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20231026024847_InitialMigration")]
+    [Migration("20231027045857_InitialMigration")]
     partial class InitialMigration
     {
         /// <inheritdoc />

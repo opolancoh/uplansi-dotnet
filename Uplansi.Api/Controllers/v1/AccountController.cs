@@ -1,7 +1,7 @@
 using Asp.Versioning;
 using Microsoft.AspNetCore.Mvc;
 using Uplansi.Core.Contracts.Services;
-using Uplansi.Core.DTOs;
+using Uplansi.Core.DTOs.Account;
 
 namespace Uplansi.Api.Controllers.v1;
 
@@ -39,6 +39,15 @@ public class AccountController : ControllerBase
     public async Task<IActionResult> Register(AccountRegisterModel item)
     {
         var result = await _service.Register(item);
+
+        return StatusCode(StatusCodes.Status200OK, result);
+    }
+    
+    [HttpPost]
+    [Route("login")]
+    public async Task<IActionResult> Register(AccountLoginModel item)
+    {
+        var result = await _service.Login(item);
 
         return StatusCode(StatusCodes.Status200OK, result);
     }

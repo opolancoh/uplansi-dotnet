@@ -1,10 +1,12 @@
+using Uplansi.Core.DTOs;
+
 namespace Uplansi.Core.Contracts.Services;
 
-public interface IDataServiceBase<in TKey, in TCreateOrUpdate, TResult>
+public interface IDataServiceBase<in TKey, in TAddOrUpdate, TResult>
 {
-    // Task<TResult> GetAll();
-    // Task<TResult> GetById(TKey id);
-    Task<TResult> Add(TCreateOrUpdate item, TKey authenticatedUserId);
-    // Task<TResult> Update(TKey id, TCreateOrUpdate item, TKey authenticatedUserId);
-    // Task<TResult> Remove(TKey id, TKey authenticatedUserId);
+    Task<TResult> GetAll(PaginationOptions pagination);
+    Task<TResult?> GetById(TKey id);
+    Task<TResult> Add(TAddOrUpdate item, Guid? authenticatedUserId);
+    Task<TResult> Update(TKey id, TAddOrUpdate item, Guid authenticatedUserId);
+    Task<TResult> Remove(TKey id);
 }

@@ -2,22 +2,25 @@ using System.ComponentModel.DataAnnotations;
 using System.Text.RegularExpressions;
 using Uplansi.Core.Utils;
 
-namespace Uplansi.Core.DTOs;
+namespace Uplansi.Core.DTOs.Account;
 
 public record AccountRegisterModel : IValidatableObject
 {
     public string? UserName { get; init; }
     public string? Password { get; init; }
     public string? DisplayName { get; init; }
+    
+    public string? Email { get; init; }
     public string? Country { get; init; }
     public string? Language { get; init; }
 
     public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
     {
         var validationResult = new List<ValidationResult>();
-        validationResult.AddRange(ValidateField(DisplayName, nameof(DisplayName), TextHelper.RegExp.PersonNameRegExp, false));
         validationResult.AddRange(ValidateField(UserName, nameof(UserName), TextHelper.RegExp.UserNameRegExp));
         validationResult.AddRange(ValidateField(Password, nameof(Password), null));
+        validationResult.AddRange(ValidateField(DisplayName, nameof(DisplayName), TextHelper.RegExp.PersonNameRegExp, false));
+        validationResult.AddRange(ValidateField(Email, nameof(Email), TextHelper.RegExp.EmailRegExp, false));
 
         return validationResult;
     }

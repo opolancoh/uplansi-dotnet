@@ -1,8 +1,10 @@
+using System.Security.Claims;
 using Asp.Versioning;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Uplansi.Core.Contracts.Services;
 using Uplansi.Core.DTOs;
+using Uplansi.Core.DTOs.User;
 
 namespace Uplansi.Api.Controllers.v1;
 
@@ -10,7 +12,7 @@ namespace Uplansi.Api.Controllers.v1;
 [ApiVersion("1.0")]
 [Route("api/[controller]")]
 [Route("api/v{version:apiVersion}/[controller]")]
-// [Authorize]
+[Authorize(Roles = "Administrator")]
 public class UsersController : ControllerBase
 {
     private readonly IUserService _service;
@@ -29,26 +31,28 @@ public class UsersController : ControllerBase
         return StatusCode(StatusCodes.Status200OK, result);
     }
 
-    /* [HttpGet("{id}")]
+    [HttpGet("{id}")]
     public async Task<IActionResult> GetById(Guid id)
     {
         var result = await _service.GetById(id);
 
         return StatusCode(StatusCodes.Status200OK, result);
-    } */
+    }
 
     [HttpPost]
-    public async Task<IActionResult> Add(UserAddOrUpdate item)
+    public async Task<IActionResult> Add(UserAddModel item)
     {
-        var result = await _service.Add(item);
+        var userIdClaim = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier);
+        var result = await _service.Add(item, Guid.Parse(userIdClaim!.Value));
 
         return StatusCode(StatusCodes.Status200OK, result);
     }
 
-    /* [HttpPut("{id}")]
-    public async Task<IActionResult> Update(Guid id, RiskCreateOrUpdateDto item)
+    [HttpPut("{id}")]
+    public async Task<IActionResult> Update(Guid id, UserUpdateModel item)
     {
-        var result = await _service.Update(id, item);
+        var userIdClaim = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier);
+        var result = await _service.Update(id, item, Guid.Parse(userIdClaim!.Value));
 
         return StatusCode(StatusCodes.Status200OK, result);
     }
@@ -60,13 +64,4 @@ public class UsersController : ControllerBase
 
         return StatusCode(StatusCodes.Status200OK, result);
     }
-    
-    [HttpPost]
-    [Route("add-range")]
-    public async Task<IActionResult> AddRange(IEnumerable<RiskCreateOrUpdateDto> items)
-    {
-        var result = await _service.AddRange(items);
-
-        return StatusCode(StatusCodes.Status200OK, result);
-    } */
 }

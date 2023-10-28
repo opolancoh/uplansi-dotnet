@@ -280,22 +280,20 @@ namespace Uplansi.Data.EntityFramework.Migrations.AccountDb
                         {
                             Id = new Guid("42b42706-61fd-4e60-8129-d1570382a9bd"),
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "e604e349-0ccd-49fa-8f3b-4601363816a1",
+                            ConcurrencyStamp = "0038eb6a-c2e5-49ba-b58e-56fda8a4a9f4",
                             CountryId = "us",
-                            CreatedAt = new DateTime(2023, 10, 26, 2, 48, 35, 497, DateTimeKind.Utc).AddTicks(8740),
+                            CreatedAt = new DateTime(2023, 10, 27, 4, 58, 51, 667, DateTimeKind.Utc).AddTicks(2930),
                             CreatedById = new Guid("42b42706-61fd-4e60-8129-d1570382a9bd"),
-                            DisplayName = "system",
+                            DisplayName = "System",
                             Email = "system@ikobit.com",
                             EmailConfirmed = false,
                             FullName = "System",
                             LanguageId = "en",
                             LockoutEnabled = false,
-                            NormalizedEmail = "SYSTEM@IKOBIT.COM",
-                            NormalizedUserName = "SYSTEM",
-                            PasswordHash = "AQAAAAIAAYagAAAAECBGYKpAnbmwI0Hn+63keJuC9r3dVBhMrPH8XuJDL/GEJFMMpVGYozy8Bl2Obt4QHw==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEIoL4E2VyEbNSZX3tYj/nrdCHn2HAeV3VVBEX9Jqb1THUxcaWNr8JZVCJfbJOVKL0w==",
                             PhoneNumberConfirmed = false,
                             TwoFactorEnabled = false,
-                            UpdatedAt = new DateTime(2023, 10, 26, 2, 48, 35, 497, DateTimeKind.Utc).AddTicks(8740),
+                            UpdatedAt = new DateTime(2023, 10, 27, 4, 58, 51, 667, DateTimeKind.Utc).AddTicks(2930),
                             UpdatedById = new Guid("42b42706-61fd-4e60-8129-d1570382a9bd"),
                             UserName = "system"
                         },
@@ -303,22 +301,20 @@ namespace Uplansi.Data.EntityFramework.Migrations.AccountDb
                         {
                             Id = new Guid("8dfff7f0-1bf5-4dd1-b217-cb7694ed789f"),
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "497ec4e2-3b56-4ef5-b140-ddbeec4850c3",
+                            ConcurrencyStamp = "ac96a868-7084-484b-a31a-db07fb6abe62",
                             CountryId = "us",
-                            CreatedAt = new DateTime(2023, 10, 26, 2, 48, 35, 497, DateTimeKind.Utc).AddTicks(8750),
+                            CreatedAt = new DateTime(2023, 10, 27, 4, 58, 51, 667, DateTimeKind.Utc).AddTicks(2940),
                             CreatedById = new Guid("42b42706-61fd-4e60-8129-d1570382a9bd"),
-                            DisplayName = "admin",
+                            DisplayName = "Admin",
                             Email = "admin@ikobit.com",
                             EmailConfirmed = false,
                             FullName = "Admin",
                             LanguageId = "en",
                             LockoutEnabled = false,
-                            NormalizedEmail = "ADMIN@IKOBIT.COM",
-                            NormalizedUserName = "ADMIN",
-                            PasswordHash = "AQAAAAIAAYagAAAAEEApzumAt1MWSW2cpOB6+SjBiwwBXiM1l2cjvLYY6hQ3dh1SSXrjYGNsm2vEcWWOdg==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEOn/AHPBNDhdB8+DnYXxbVZHMp6/Q4i9xZm2fo4xvu0n/s4m1v65617n5EqlRa/Okg==",
                             PhoneNumberConfirmed = false,
                             TwoFactorEnabled = false,
-                            UpdatedAt = new DateTime(2023, 10, 26, 2, 48, 35, 497, DateTimeKind.Utc).AddTicks(8750),
+                            UpdatedAt = new DateTime(2023, 10, 27, 4, 58, 51, 667, DateTimeKind.Utc).AddTicks(2940),
                             UpdatedById = new Guid("42b42706-61fd-4e60-8129-d1570382a9bd"),
                             UserName = "admin"
                         });
@@ -326,8 +322,8 @@ namespace Uplansi.Data.EntityFramework.Migrations.AccountDb
 
             modelBuilder.Entity("Uplansi.Core.Entities.Account.RefreshToken", b =>
                 {
-                    b.Property<string>("UserId")
-                        .HasColumnType("text");
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uuid");
 
                     b.Property<string>("Token")
                         .HasColumnType("text");
@@ -351,6 +347,11 @@ namespace Uplansi.Data.EntityFramework.Migrations.AccountDb
                         {
                             UserId = new Guid("42b42706-61fd-4e60-8129-d1570382a9bd"),
                             RoleId = new Guid("42b42706-61fd-4e60-8129-d1570382a9bd")
+                        },
+                        new
+                        {
+                            UserId = new Guid("42b42706-61fd-4e60-8129-d1570382a9bd"),
+                            RoleId = new Guid("8dfff7f0-1bf5-4dd1-b217-cb7694ed789f")
                         },
                         new
                         {

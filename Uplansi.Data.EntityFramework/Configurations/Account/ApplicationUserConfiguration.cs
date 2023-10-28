@@ -19,7 +19,7 @@ public class ApplicationUserConfiguration : IEntityTypeConfiguration<Application
         builder
             .Property(e => e.DisplayName)
             .IsRequired()
-            .HasMaxLength(15);
+            .HasMaxLength(20);
 
         builder
             .Property(e => e.Gender)
@@ -56,10 +56,10 @@ public class ApplicationUserConfiguration : IEntityTypeConfiguration<Application
             new()
             {
                 Id = Guid.Parse(SystemUserId),
-                FullName = "System",
                 UserName = "system",
-                DisplayName = "system",
                 NormalizedUserName = "SYSTEM",
+                FullName = "System",
+                DisplayName = "System",
                 Email = "system@ikobit.com",
                 NormalizedEmail = "SYSTEM@IKOBIT.COM",
                 CreatedAt = DateTime.UtcNow,
@@ -72,10 +72,10 @@ public class ApplicationUserConfiguration : IEntityTypeConfiguration<Application
             new()
             {
                 Id = Guid.Parse(AdminUserId),
-                FullName = "Admin",
                 UserName = "admin",
-                DisplayName = "admin",
                 NormalizedUserName = "ADMIN",
+                FullName = "Admin",
+                DisplayName = "Admin",
                 Email = "admin@ikobit.com",
                 NormalizedEmail = "ADMIN@IKOBIT.COM",
                 CreatedAt = DateTime.UtcNow,

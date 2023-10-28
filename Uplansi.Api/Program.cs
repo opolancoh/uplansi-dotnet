@@ -5,6 +5,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.ConfigurePersistence();
 builder.Services.ConfigureIdentity();
+builder.Services.ConfigureJwt(builder.Configuration);
 builder.Services.ConfigureControllers();
 builder.Services.ConfigureApiVersioning();
 builder.Services.ConfigureCors();
@@ -22,10 +23,9 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseHttpsRedirection();
-
+app.UseCors();
+app.UseAuthentication();
 app.UseAuthorization();
-
 app.MapControllers();
 
 app.Run();
