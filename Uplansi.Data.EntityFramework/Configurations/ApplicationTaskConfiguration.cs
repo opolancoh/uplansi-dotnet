@@ -26,22 +26,21 @@ public class ApplicationTaskConfiguration : IEntityTypeConfiguration<Application
             .HasMaxLength(50);
         
         builder
-            .HasOne(u => u.AssignedTo)
-            .WithMany()
-            .HasForeignKey(u => u.AssignedToId)
-            .OnDelete(DeleteBehavior.Restrict);
-
-        builder
-            .HasOne(u => u.CreatedBy)
-            .WithMany()
-            .HasForeignKey(u => u.CreatedById)
-            .OnDelete(DeleteBehavior.Restrict);
+            .HasOne(at => at.AssignedTo)
+            .WithMany(au => au.AssignedToTasks)
+            .HasForeignKey(at => at.AssignedToId)
+            .OnDelete(DeleteBehavior.Restrict); 
         
+        /* builder
+           .HasOne(at => at.CreatedBy)
+           .WithMany(au => au.CreatedByTasks)
+           .HasForeignKey(at => at.CreatedById)
+           .OnDelete(DeleteBehavior.Restrict);
+           
         builder
-            .HasOne(u => u.UpdatedBy)
-            .WithMany()
-            .HasForeignKey(u => u.UpdatedById)
-            .OnDelete(DeleteBehavior.Restrict);
-        
+           .HasOne(at => at.UpdatedBy)
+           .WithMany(au => au.UpdatedByTasks)
+           .HasForeignKey(at => at.UpdatedById)
+           .OnDelete(DeleteBehavior.Restrict); */
     }
 }

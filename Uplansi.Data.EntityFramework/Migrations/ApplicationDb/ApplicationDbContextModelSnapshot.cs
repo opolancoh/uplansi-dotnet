@@ -37,18 +37,17 @@ namespace Uplansi.Data.EntityFramework.Migrations.ApplicationDb
                     b.Property<bool>("Completed")
                         .HasColumnType("boolean");
 
-                    b.Property<Guid>("CreatedById")
-                        .HasColumnType("uuid");
-
                     b.Property<string>("Description")
-                        .HasColumnType("text");
+                        .HasMaxLength(4000)
+                        .HasColumnType("character varying(4000)");
 
                     b.Property<DateTime?>("DueDate")
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("GroupName")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)");
 
                     b.Property<int>("Priority")
                         .HasColumnType("integer");
@@ -58,14 +57,12 @@ namespace Uplansi.Data.EntityFramework.Migrations.ApplicationDb
 
                     b.Property<string>("Title")
                         .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<Guid>("UpdatedById")
-                        .HasColumnType("uuid");
+                        .HasMaxLength(80)
+                        .HasColumnType("character varying(80)");
 
                     b.HasKey("Id");
 
-                    b.ToTable("ApplicationTasks");
+                    b.ToTable("ApplicationTasks", (string)null);
                 });
 
             modelBuilder.Entity("Uplansi.Core.Entities.Common.Country", b =>

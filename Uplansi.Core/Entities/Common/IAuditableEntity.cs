@@ -8,8 +8,8 @@ public interface IAuditableEntity
     DateTime UpdatedAt { get; set; }
 
     Guid CreatedById { get; set; }
-    ApplicationUser? CreatedBy { get; set; }
+    ApplicationUser CreatedBy { get; set; }
 
     Guid UpdatedById { get; set; }
-    ApplicationUser? UpdatedBy { get; set; }
+    ApplicationUser UpdatedBy { get; set; }
 }

@@ -21,7 +21,12 @@ public class ApplicationUser : IdentityUser<Guid>, IAuditableEntity
     public DateTime CreatedAt { get; set; }
     public DateTime UpdatedAt { get; set; }
     public Guid CreatedById { get; set; }
-    public ApplicationUser? CreatedBy { get; set; }
+    public ApplicationUser CreatedBy { get; set; }
     public Guid UpdatedById { get; set; }
-    public ApplicationUser? UpdatedBy { get; set; }
+    public ApplicationUser UpdatedBy { get; set; }
+    
+    // 
+    public ICollection<ApplicationTask> AssignedToTasks { get; set; }
+    // public ICollection<ApplicationTask> CreatedByTasks { get; set; }
+    // public ICollection<ApplicationTask> UpdatedByTasks { get; set; }
 }

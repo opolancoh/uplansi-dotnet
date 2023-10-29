@@ -1,17 +1,14 @@
 using Uplansi.Core.Entities;
 
-namespace Uplansi.Core.DTOs;
+namespace Uplansi.Core.DTOs.Task;
 
-public record TaskAddOrUpdate
+public record TaskMyListResult
 {
+    public Guid Id { get; init; }
     public required string Title { get; init; }
     public string? Description { get; init; }
-    public int Priority { get; init; }
+    public required TaskPriority Priority { get; init; }
     public DateTime? DueDate { get; init; }
     public int? Progress { get; init; }
     public required bool Completed { get; init; }
-    public TaskAcceptance Acceptance { get; init; }
-    public required string GroupName { get; init; }
-    
-    public required Guid AssignedToId { get; set; }
 }

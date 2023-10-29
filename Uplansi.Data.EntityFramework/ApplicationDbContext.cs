@@ -32,6 +32,7 @@ public class ApplicationDbContext : DbContext
 
         modelBuilder.ApplyConfiguration(new LanguageConfiguration());
         modelBuilder.ApplyConfiguration(new CountryConfiguration());
+        modelBuilder.ApplyConfiguration(new ApplicationTaskConfiguration());
 
         // Ignore the entities that are created on ApplicationDbContext
         modelBuilder.Ignore<ApplicationUser>();

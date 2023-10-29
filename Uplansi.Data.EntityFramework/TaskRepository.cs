@@ -1,5 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Uplansi.Core.Contracts.Repositories;
+using Uplansi.Core.DTOs;
+using Uplansi.Core.DTOs.Task;
 using Uplansi.Core.Entities;
 
 namespace Uplansi.Data.EntityFramework;
@@ -15,7 +17,7 @@ public class TaskRepository : ITaskRepository
         _entitySet = context.ApplicationTasks;
     }
 
-    /* public async Task<PagedListResult<EmployeeListResult>> GetAll(PaginationOptions pagination)
+    public async Task<PagedListResult<TaskMyListResult>> GetAll(PaginationOptions pagination, Guid userId)
     {
         var (pageIndex, pageSize, skip, addTotalCount) = pagination;
 
@@ -27,38 +29,24 @@ public class TaskRepository : ITaskRepository
         }
 
         var data = await _entitySet
-            .AsNoTracking()
+            .Where(x => x.AssignedToId == userId)
             .Skip(skip)
             .Take(pageSize)
             .Select(
-                x => new EmployeeListResult
+                x => new TaskMyListResult
                 {
                     Id = x.Id,
-                    FirstName = x.FirstName,
-                    LastName = x.LastName,
-                    Gender = (int)x.Gender,
-                    Email = x.Email,
-                    Salary = x.Salary,
-                    Address = new AddressShortDto
-                    {
-                        Street = x.Address.Street,
-                        City = x.Address.City,
-                        State = x.Address.State
-                    },
-                    Department = new KeyValueDto<Guid>
-                    {
-                        Id = x.Department.Id,
-                        Name = x.Department.Name
-                    },
-                    Projects = x.EmployeeProjects.Select(p => new KeyValueDto<Guid>
-                    {
-                        Id = p.ProjectId,
-                        Name = p.Project.Name
-                    }).ToList()
+                    Title = x.Title,
+                    Description = x.Description,
+                    Priority = x.Priority,
+                    DueDate = x.DueDate,
+                    Progress = x.Progress,
+                    Completed = x.Completed
                 })
+            .AsNoTracking()
             .ToListAsync();
 
-        return new PagedListResult<EmployeeListResult>
+        return new PagedListResult<TaskMyListResult>
         {
             Data = data,
             PageInfo = new PageInfo
@@ -70,50 +58,40 @@ public class TaskRepository : ITaskRepository
         };
     }
 
-    public async Task<EmployeeDetailResult?> GetById(Guid id)
+    public async Task<TaskMyDetailResult?> GetById(Guid id, Guid userId)
     {
         return await _entitySet
+            .Where(x => x.Id == id && x.AssignedToId == userId)
             .AsNoTracking()
             .Select(
-                x => new EmployeeDetailResult
+                x => new TaskMyDetailResult
                 {
                     Id = x.Id,
-                    FirstName = x.FirstName,
-                    LastName = x.LastName,
-                    Gender = (int)x.Gender,
-                    Email = x.Email,
-                    HireDate = x.HireDate,
-                    Salary = x.Salary,
-                    IsActive = x.IsActive,
-                    HourlyRate = x.HourlyRate,
-                    MaritalStatus = x.MaritalStatus,
-                    CreatedAt = x.CreatedAt,
+                    Title = x.Title,
+                    Description = x.Description,
+                    Priority = x.Priority,
+                    DueDate = x.DueDate,
+                    Progress = x.Progress,
+                    Completed = x.Completed,
+                    /* CreatedAt = x.CreatedAt,
+                    CreatedBy = new KeyValueDto<Guid>
+                    {
+                        Id = x.CreatedBy!.Id,
+                        Name = x.CreatedBy!.UserName!
+                    }, 
                     UpdatedAt = x.UpdatedAt,
-                    Address = new AddressDto
+                    UpdatedBy = new KeyValueDto<Guid>
                     {
-                        Street = x.Address.Street,
-                        City = x.Address.City,
-                        State = x.Address.State,
-                        ZipCode = x.Address.ZipCode
-                    },
-                    Department = new KeyValueDto<Guid>
-                    {
-                        Id = x.Department.Id,
-                        Name = x.Department.Name
-                    },
-                    Projects = x.EmployeeProjects.Select(p => new KeyValueDto<Guid>
-                    {
-                        Id = p.ProjectId,
-                        Name = p.Project.Name
-                    }).ToList()
+                        Id = x.UpdatedBy!.Id,
+                        Name = x.UpdatedBy!.UserName!
+                    } */
                 })
-            .SingleOrDefaultAsync(x => x.Id == id);
-    } */
+            .SingleOrDefaultAsync();
+    }
 
-    public async Task<bool> Add(ApplicationTask item)
+    public async Task<int> Add(ApplicationTask item)
     {
         _entitySet.Add(item);
-        var affectedRows = await _context.SaveChangesAsync();
-        return affectedRows > 0;
+        return await _context.SaveChangesAsync();
     }
 }

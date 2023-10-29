@@ -18,17 +18,15 @@ namespace Uplansi.Data.EntityFramework.Migrations.ApplicationDb
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
-                    Title = table.Column<string>(type: "text", nullable: false),
-                    Description = table.Column<string>(type: "text", nullable: true),
+                    Title = table.Column<string>(type: "character varying(80)", maxLength: 80, nullable: false),
+                    Description = table.Column<string>(type: "character varying(4000)", maxLength: 4000, nullable: true),
                     Priority = table.Column<int>(type: "integer", nullable: false),
                     DueDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
                     Progress = table.Column<int>(type: "integer", nullable: true),
                     Completed = table.Column<bool>(type: "boolean", nullable: false),
                     Acceptance = table.Column<int>(type: "integer", nullable: false),
-                    GroupName = table.Column<string>(type: "text", nullable: false),
-                    AssignedToId = table.Column<Guid>(type: "uuid", nullable: false),
-                    CreatedById = table.Column<Guid>(type: "uuid", nullable: false),
-                    UpdatedById = table.Column<Guid>(type: "uuid", nullable: false)
+                    GroupName = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
+                    AssignedToId = table.Column<Guid>(type: "uuid", nullable: false)
                 },
                 constraints: table =>
                 {

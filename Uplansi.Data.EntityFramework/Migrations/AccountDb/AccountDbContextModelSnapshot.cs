@@ -199,8 +199,8 @@ namespace Uplansi.Data.EntityFramework.Migrations.AccountDb
 
                     b.Property<string>("DisplayName")
                         .IsRequired()
-                        .HasMaxLength(15)
-                        .HasColumnType("character varying(15)");
+                        .HasMaxLength(20)
+                        .HasColumnType("character varying(20)");
 
                     b.Property<string>("Email")
                         .HasMaxLength(256)
@@ -280,9 +280,9 @@ namespace Uplansi.Data.EntityFramework.Migrations.AccountDb
                         {
                             Id = new Guid("42b42706-61fd-4e60-8129-d1570382a9bd"),
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "0038eb6a-c2e5-49ba-b58e-56fda8a4a9f4",
+                            ConcurrencyStamp = "420b4601-48d0-4515-ba76-f2b6ee2b0d24",
                             CountryId = "us",
-                            CreatedAt = new DateTime(2023, 10, 27, 4, 58, 51, 667, DateTimeKind.Utc).AddTicks(2930),
+                            CreatedAt = new DateTime(2023, 10, 29, 0, 24, 22, 105, DateTimeKind.Utc).AddTicks(4940),
                             CreatedById = new Guid("42b42706-61fd-4e60-8129-d1570382a9bd"),
                             DisplayName = "System",
                             Email = "system@ikobit.com",
@@ -290,10 +290,12 @@ namespace Uplansi.Data.EntityFramework.Migrations.AccountDb
                             FullName = "System",
                             LanguageId = "en",
                             LockoutEnabled = false,
-                            PasswordHash = "AQAAAAIAAYagAAAAEIoL4E2VyEbNSZX3tYj/nrdCHn2HAeV3VVBEX9Jqb1THUxcaWNr8JZVCJfbJOVKL0w==",
+                            NormalizedEmail = "SYSTEM@IKOBIT.COM",
+                            NormalizedUserName = "SYSTEM",
+                            PasswordHash = "AQAAAAIAAYagAAAAEPyVmClCnlGNHnGSsYV2rndAvmcPzMYJGhR4ZoQS4xQ36pz0+uvCp6bm0XyXVMqKtA==",
                             PhoneNumberConfirmed = false,
                             TwoFactorEnabled = false,
-                            UpdatedAt = new DateTime(2023, 10, 27, 4, 58, 51, 667, DateTimeKind.Utc).AddTicks(2930),
+                            UpdatedAt = new DateTime(2023, 10, 29, 0, 24, 22, 105, DateTimeKind.Utc).AddTicks(4940),
                             UpdatedById = new Guid("42b42706-61fd-4e60-8129-d1570382a9bd"),
                             UserName = "system"
                         },
@@ -301,9 +303,9 @@ namespace Uplansi.Data.EntityFramework.Migrations.AccountDb
                         {
                             Id = new Guid("8dfff7f0-1bf5-4dd1-b217-cb7694ed789f"),
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "ac96a868-7084-484b-a31a-db07fb6abe62",
+                            ConcurrencyStamp = "27db7226-d26f-47b7-8b29-3c748243f65b",
                             CountryId = "us",
-                            CreatedAt = new DateTime(2023, 10, 27, 4, 58, 51, 667, DateTimeKind.Utc).AddTicks(2940),
+                            CreatedAt = new DateTime(2023, 10, 29, 0, 24, 22, 105, DateTimeKind.Utc).AddTicks(4950),
                             CreatedById = new Guid("42b42706-61fd-4e60-8129-d1570382a9bd"),
                             DisplayName = "Admin",
                             Email = "admin@ikobit.com",
@@ -311,10 +313,12 @@ namespace Uplansi.Data.EntityFramework.Migrations.AccountDb
                             FullName = "Admin",
                             LanguageId = "en",
                             LockoutEnabled = false,
-                            PasswordHash = "AQAAAAIAAYagAAAAEOn/AHPBNDhdB8+DnYXxbVZHMp6/Q4i9xZm2fo4xvu0n/s4m1v65617n5EqlRa/Okg==",
+                            NormalizedEmail = "ADMIN@IKOBIT.COM",
+                            NormalizedUserName = "ADMIN",
+                            PasswordHash = "AQAAAAIAAYagAAAAEMyTTVyjaJpOyGwIMtpsJ9yB0bQymAv8w38uGr2nNkdwogiUU0oRNFnTSq5TbqrNjA==",
                             PhoneNumberConfirmed = false,
                             TwoFactorEnabled = false,
-                            UpdatedAt = new DateTime(2023, 10, 27, 4, 58, 51, 667, DateTimeKind.Utc).AddTicks(2940),
+                            UpdatedAt = new DateTime(2023, 10, 29, 0, 24, 22, 105, DateTimeKind.Utc).AddTicks(4950),
                             UpdatedById = new Guid("42b42706-61fd-4e60-8129-d1570382a9bd"),
                             UserName = "admin"
                         });
@@ -347,11 +351,6 @@ namespace Uplansi.Data.EntityFramework.Migrations.AccountDb
                         {
                             UserId = new Guid("42b42706-61fd-4e60-8129-d1570382a9bd"),
                             RoleId = new Guid("42b42706-61fd-4e60-8129-d1570382a9bd")
-                        },
-                        new
-                        {
-                            UserId = new Guid("42b42706-61fd-4e60-8129-d1570382a9bd"),
-                            RoleId = new Guid("8dfff7f0-1bf5-4dd1-b217-cb7694ed789f")
                         },
                         new
                         {

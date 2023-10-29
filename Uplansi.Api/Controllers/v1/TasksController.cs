@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Uplansi.Core.Contracts.Services;
 using Uplansi.Core.DTOs;
+using Uplansi.Core.DTOs.Task;
 
 namespace Uplansi.Api.Controllers.v1;
 
@@ -10,7 +11,7 @@ namespace Uplansi.Api.Controllers.v1;
 [ApiVersion("1.0")]
 [Route("api/[controller]")]
 [Route("api/v{version:apiVersion}/[controller]")]
-// [Authorize]
+[Authorize]
 public class TasksController : ControllerBase
 {
     private readonly ITaskService _service;
@@ -20,10 +21,11 @@ public class TasksController : ControllerBase
         _service = service;
     }
 
-    /* [HttpGet]
-    public async Task<IActionResult> Get()
+    [HttpGet]
+    public async Task<IActionResult> Get([FromQuery] int? pageIndex, [FromQuery] int? pageSize, bool? addTotalCount)
     {
-        var result = await _service.GetAll();
+        var pagination = new PaginationOptions(pageIndex, pageSize, addTotalCount);
+        var result = await _service.GetAll(pagination, User.Claims);
 
         return StatusCode(StatusCodes.Status200OK, result);
     }
@@ -31,15 +33,15 @@ public class TasksController : ControllerBase
     [HttpGet("{id}")]
     public async Task<IActionResult> GetById(Guid id)
     {
-        var result = await _service.GetById(id);
+        var result = await _service.GetById(id, User.Claims);
 
         return StatusCode(StatusCodes.Status200OK, result);
-    } */
+    }
 
     [HttpPost]
-    public async Task<IActionResult> Create(TaskAddOrUpdate item)
+    public async Task<IActionResult> Add(TaskAddModel item)
     {
-        var result = await _service.Add(item);
+        var result = await _service.Add(item, User.Claims);
 
         return StatusCode(StatusCodes.Status200OK, result);
     }
@@ -59,7 +61,7 @@ public class TasksController : ControllerBase
 
         return StatusCode(StatusCodes.Status200OK, result);
     }
-    
+
     [HttpPost]
     [Route("add-range")]
     public async Task<IActionResult> AddRange(IEnumerable<RiskCreateOrUpdateDto> items)

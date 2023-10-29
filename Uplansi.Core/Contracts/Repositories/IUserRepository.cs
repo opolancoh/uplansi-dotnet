@@ -4,10 +4,8 @@ using Uplansi.Core.Entities.Account;
 
 namespace Uplansi.Core.Contracts.Repositories;
 
-public interface
-    IUserRepository : IRepositoryBase<Guid, ApplicationUser, PagedListResult<UserListResult>, UserDetailResult>
+public interface IUserRepository
 {
-    // Task AddRange(IEnumerable<ApplicationUser> items);
-    // Task<IEnumerable<ApplicationUserListDto>> GetAllWithRoles();
-    // Task<ApplicationUserDetailsDto?> GetByIdWithRoles(string id);
+    Task<PagedListResult<UserListResult>> GetAll(PaginationOptions pagination);
+    Task<UserDetailResult?> GetById(Guid id);
 }

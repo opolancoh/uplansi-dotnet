@@ -1,4 +1,3 @@
-using System.Text;
 using System.Text.Json;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Asp.Versioning;
@@ -31,10 +30,15 @@ public static class ServiceExtensions
             options.EnableSensitiveDataLogging();
         });
 
+        // User
         services.AddScoped<IUserRepository, UserRepository>();
         services.AddScoped<IUserService, UserService>();
+        // Account
         services.AddScoped<IAccountRepository, AccountRepository>();
         services.AddScoped<IAccountService, AccountService>();
+        // Task
+        services.AddScoped<ITaskRepository, TaskRepository>();
+        services.AddScoped<ITaskService, TaskService>();
     }
 
     public static void ConfigureIdentity(this IServiceCollection services)

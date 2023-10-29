@@ -1,4 +1,4 @@
-namespace Uplansi.Core.DTOs;
+namespace Uplansi.Core.DTOs.User;
 
 public record UserListResult
 {

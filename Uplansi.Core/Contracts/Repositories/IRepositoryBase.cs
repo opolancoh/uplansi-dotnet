@@ -8,6 +8,6 @@ public interface IRepositoryBase<in TKey, in TEntity, TListResult, TDetailResult
     Task<TDetailResult?> GetById(TKey id);
     Task<int> Add(TEntity item);
     Task<int> Update(TEntity item);
-    // Task<int> Remove(TKey id);
+    Task<int> Remove(TKey id);
     Task<bool> ItemExists(TKey id);
 }

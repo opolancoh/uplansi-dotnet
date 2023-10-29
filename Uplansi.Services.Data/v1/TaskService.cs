@@ -1,6 +1,8 @@
+using System.Security.Claims;
 using Uplansi.Core.Contracts.Repositories;
 using Uplansi.Core.Contracts.Services;
 using Uplansi.Core.DTOs;
+using Uplansi.Core.DTOs.Task;
 using Uplansi.Core.Entities;
 
 namespace Uplansi.Services.Data.v1;
@@ -14,59 +16,68 @@ public class TaskService : ITaskService
         _repository = repository;
     }
 
-    /* public async Task<ApplicationResult> GetAll(PaginationOptions pagination)
+    public async Task<ApplicationResult> GetAll(PaginationOptions pagination, IEnumerable<Claim> claims)
     {
-        var result = await _repository.GetAll(pagination);
+        var userId = Guid.Parse(claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)!.Value);
+        var result = await _repository.GetAll(pagination, userId);
 
         return new ApplicationResult
         {
-            Status = 200,
+            Status = ApplicationResultStatus.Ok,
             PageInfo = result.PageInfo,
             Data = result.Data
         };
     }
 
-    public async Task<ApplicationResult?> GetById(Guid id)
+    public async Task<ApplicationResult?> GetById(Guid id, IEnumerable<Claim> claims)
     {
-        var item = await _repository.GetById(id);
+        var userId = Guid.Parse(claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)!.Value);
+        var item = await _repository.GetById(id, userId);
 
         if (item == null)
         {
             return new ApplicationResult
             {
-                Status = 404,
+                Status = ApplicationResultStatus.NotFound,
                 Message = $"The item with id '{id}' was not found or you don't have permission to access it."
             };
         }
 
         return new ApplicationResult
         {
-            Status = 200,
+            Status = ApplicationResultStatus.Ok,
             Data = item
         };
-    } */
+    }
 
-    public async Task<ApplicationResult> Add(TaskAddOrUpdate item)
+    public async Task<ApplicationResult> Add(TaskAddModel item, IEnumerable<Claim> claims)
     {
+        var newItemId = Guid.NewGuid();
+        var userId = Guid.Parse(claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)!.Value);
+        var isMyTask = userId == item.AssignedToId;
+        var now = DateTime.UtcNow;
+
         var newItem = new ApplicationTask
         {
-            Id = Guid.NewGuid(),
-             Title = item.Title,
-             Description = item.Description,
-             Priority = item.Priority,
-             DueDate = item.DueDate,
-             Progress = item.Progress,
-             Completed = item.Completed,
-             Acceptance = item.Acceptance,
-             GroupName = item.GroupName,
-             AssignedToId = item.AssignedToId,
-             CreatedById = Guid.NewGuid(),
-             UpdatedById = Guid.NewGuid()
+            Id = newItemId,
+            Title = item.Title,
+            Description = item.Description,
+            Priority = item.Priority,
+            DueDate = item.DueDate,
+            Progress = 0,
+            Completed = false,
+            Acceptance = isMyTask ? TaskAcceptance.Accepted : TaskAcceptance.NotAccepted,
+            GroupName = isMyTask ? "my" : item.GroupName,
+            AssignedToId = item.AssignedToId,
+            /* CreatedAt = now,
+            CreatedById = userId,
+            UpdatedAt = now,
+            UpdatedById = userId */
         };
 
-        var isValid = await _repository.Add(newItem);
+        var affectedRows = await _repository.Add(newItem);
 
-        if (isValid)
+        if (affectedRows > 0)
         {
             return new ApplicationResult
             {

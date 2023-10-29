@@ -12,7 +12,7 @@ namespace Uplansi.Api.Controllers.v1;
 [ApiVersion("1.0")]
 [Route("api/[controller]")]
 [Route("api/v{version:apiVersion}/[controller]")]
-[Authorize(Roles = "Administrator")]
+// [Authorize(Roles = "Administrator")]
 public class UsersController : ControllerBase
 {
     private readonly IUserService _service;

@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using Uplansi.Core.Entities;
 using Uplansi.Core.Entities.Account;
 using Uplansi.Core.Entities.Common;
 using Uplansi.Data.EntityFramework.Configurations;
@@ -38,5 +39,6 @@ public class AccountDbContext : IdentityDbContext<ApplicationUser, ApplicationRo
         // Ignore the entities that are created on ApplicationDbContext
         modelBuilder.Ignore<Language>();
         modelBuilder.Ignore<Country>();
+        modelBuilder.Ignore<ApplicationTask>();
     }
 }
